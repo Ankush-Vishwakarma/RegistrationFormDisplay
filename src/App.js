@@ -1,24 +1,43 @@
-import logo from './logo.svg';
-import './App.css';
+import { Container, Row, Col } from "react-bootstrap";
+import { Routes, Route } from "react-router-dom";
+import "./App.css";
+import Home from "./Componentsfolder/Home/Home";
+import Login from "./Componentsfolder/Home/Login";
+import Signup from "./Componentsfolder/Home/Signup";
+import ProtectedRoute from "./Componentsfolder/Home/ProtectedRoute";
+import { UserAuthContextProvider } from "./context/userAuthContext";
+import AddNewTodo from "./components/AddNewTodo";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+
+    <>
+    <Container style={{ width: "400px" }}>
+      <Row>
+        <Col>
+          <UserAuthContextProvider>
+            <Routes>
+              <Route
+                path="/home"
+                element={
+                  <ProtectedRoute>
+                    <Home />
+                  </ProtectedRoute>
+                }
+              />
+              <Route path="/" element={<Login />} />
+              <Route path="/signup" element={<Signup />} />
+            </Routes>
+          </UserAuthContextProvider>
+        </Col>
+      </Row>
+      <AddNewTodo/>
+      
+    </Container>
+
+
+</>
+    
   );
 }
 
